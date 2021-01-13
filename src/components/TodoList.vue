@@ -19,6 +19,10 @@ export default {
     methods: {
         removeTodo: function(todoItem, index){
             console.log(todoItem, index);
+            // Key 값 으로 로컬스트리지 데이터 remove
+            localStorage.removeItem(todoItem);
+            // 실시간 반영을 위해 data 에서도 삭제 
+            this.todoItems.splice(index,1)
         }
     },
     // 라이프사이클 : created
@@ -28,7 +32,9 @@ export default {
             for (let i = 0; i < localStorage.length; i++){
                 if(localStorage.key(i) !== 'loglevel:webpack-dev-server'){
                     this.todoItems.push(localStorage.key(i))
+                    
                 }
+                console.log(this.todoItems);
             }
         }
     }
