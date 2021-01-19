@@ -1,8 +1,15 @@
 <template>
   <div>
       <ul>
-          <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
-              {{todoItem}}
+          <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem.item" class="shadow">
+              <span  v-bind:class="{textCompleted: todoItem.completed}" 
+              v-on:click="toggleComplete(todoItem)">
+                (체크)
+              </span>
+              <!-- todoItem.completed 이 ture 일때 textCompleted Class 삽입 -->
+              <span v-bind:class="{textCompleted: todoItem.completed}">
+                  {{todoItem.item}}
+              </span>
               <button v-on:click="removeTodo(todoItem, index)">삭제</button>
           </li>
       </ul>
@@ -23,6 +30,11 @@ export default {
             localStorage.removeItem(todoItem);
             // 실시간 반영을 위해 data 에서도 삭제 
             this.todoItems.splice(index,1)
+        },
+        toggleComplete: function(todoItem){
+            todoItem.completed = !todoItem.completed;
+            localStorage.removeItem(todoItem.item);
+            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
         }
     },
     // 라이프사이클 : created
@@ -31,7 +43,8 @@ export default {
         if(localStorage.length > 0){
             for (let i = 0; i < localStorage.length; i++){
                 if(localStorage.key(i) !== 'loglevel:webpack-dev-server'){
-                    this.todoItems.push(localStorage.key(i))
+                    
+                    this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
                     
                 }
                 console.log(this.todoItems);
@@ -48,5 +61,8 @@ export default {
     li{
         min-width: 20vw;
         min-height: 2vw;
+    }
+    .textCompleted{
+        color: blue;
     }
 </style>
