@@ -27,7 +27,7 @@ export default {
         removeTodo: function(todoItem, index){
             console.log(todoItem, index);
             // Key 값 으로 로컬스트리지 데이터 remove
-            localStorage.removeItem(todoItem);
+            localStorage.removeItem(todoItem.item);
             // 실시간 반영을 위해 data 에서도 삭제 
             this.todoItems.splice(index,1)
         },
