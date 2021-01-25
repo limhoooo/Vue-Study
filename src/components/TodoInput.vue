@@ -5,14 +5,22 @@
       <span class="addContainer">
 
       </span>
+  
+      <Modal v-if="showModal" @close="showModal = false">
+        <h3 slot="header">경고!</h3>
+        <h3 slot="body">값을 입력해주세요.</h3>
+      </Modal>
   </div>
 </template>
 
 <script>
+import Modal from './common/Modal.vue'
+
 export default {
     data : function(){
         return{
-            newTodoItem : ""
+            newTodoItem : "",
+            showModal: false
         }
     },
     methods: {
@@ -20,12 +28,17 @@ export default {
             if(this.newTodoItem !== ''){
                this.$emit('addTodoItem',this.newTodoItem)
                 this.clearInput();
+            }else{
+                this.showModal = !this.showModal;
             }
             
         },
         clearInput : function(){
             this.newTodoItem = ''
         }
+    },
+    components: {
+        Modal: Modal
     }
 }
 </script>

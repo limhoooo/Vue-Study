@@ -1,6 +1,6 @@
 <template>
   <div>
-      <ul>
+    <transition-group name="list" tag="ul">
           <li v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item" class="shadow">
               <span  v-bind:class="{textCompleted: todoItem.completed}" 
               v-on:click="toggleComplete(todoItem, index)">
@@ -12,7 +12,7 @@
               </span>
               <button v-on:click="removeTodo(todoItem, index)">삭제</button>
           </li>
-      </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -44,5 +44,12 @@ export default {
     }
     .textCompleted{
         color: blue;
+    }
+    .list-enter-active, .list-leave-active {
+        transition: all 1s;
+    }
+    .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+        opacity: 0;
+        transform: translateY(30px);
     }
 </style>
