@@ -1,5 +1,5 @@
 # vue-todo
-
+naver blog ( https://blog.naver.com/nex110 )
 ## Project setup
 ```
 npm install
