@@ -28,6 +28,7 @@ export const store = new Vuex.Store({
             // 저장하는 로직
             localStorage.setItem(todoItem , JSON.stringify(obj));
             state.todoItems.push(obj);
+            console.log(state.todoItems);
         },
         removeOneItem(state,obj){
             // Key 값 으로 로컬스트리지 데이터 remove
