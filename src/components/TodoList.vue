@@ -3,33 +3,39 @@
     <transition-group name="list" tag="ul">
           <li v-for="(todoItem, index) in this.storedTodoItems" v-bind:key="todoItem.item" class="shadow">
               <span  v-bind:class="{textCompleted: todoItem.completed}" 
-              v-on:click="toggleComplete(todoItem, index)">
+              v-on:click="toggleComplete({todoItem, index})">
                 (체크)
               </span>
               <!-- todoItem.completed 이 ture 일때 textCompleted Class 삽입 -->
               <span v-bind:class="{textCompleted: todoItem.completed}">
                   {{todoItem.item}}
               </span>
-              <button v-on:click="removeTodo(todoItem, index)">삭제</button>
+              <button v-on:click="removeTodo({todoItem, index})">삭제</button>
           </li>
     </transition-group>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters,mapMutations } from 'vuex'
 
 
 export default {
     methods: {
-        removeTodo: function(todoItem, index){
-            const obj = {todoItem,index}
-            this.$store.commit('removeOneItem',obj);
-        },
-        toggleComplete: function(todoItem,index){
-            const obj = {todoItem,index}
-             this.$store.commit('toggleOneItem',obj)
-        }
+
+        ...mapMutations({
+            removeTodo : 'removeOneItem',
+            toggleComplete : 'toggleOneItem'
+        }),
+
+        // removeTodo: function(todoItem, index){
+        //     const obj = {todoItem,index}
+        //     this.$store.commit('removeOneItem',obj);
+        // },
+        // toggleComplete: function(todoItem,index){
+        //     const obj = {todoItem,index}
+        //      this.$store.commit('toggleOneItem',obj)
+        // }
     },
     computed: {
         ...mapGetters(['storedTodoItems'])
